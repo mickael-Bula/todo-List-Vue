@@ -1,7 +1,7 @@
 <template>
     <form id="form" class="form">
-      <input type="text" class="input" id="myInput" placeholder="Titre..." v-model.lazy.trim="label">
-      <button class="addBtn" @click.prevent="onSubmit">Ajouter</button>
+      <input type="text" class="input" id="myInput" @keyup.enter="onSubmit" placeholder="Titre..." v-model.trim="label">
+      <button class="addBtn" @click.self.prevent="onSubmit">Ajouter</button>
     </form>
 </template>
 
@@ -17,8 +17,8 @@ export default {
             if ("" == this.label) {
                 return
             };
+            console.log("dans onSubmit");
             this.$emit('todo-added', this.label);
-            console.log("emit est passé");
             this.label="";
         }
     },

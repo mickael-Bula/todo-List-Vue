@@ -2,25 +2,29 @@
   <div class="header">
     <h1 class="title">To-do List<img class="logo" src="/vuejs-icon.svg" /></h1>
     <h3 class="subtitle">avec persistance des données dans le localStorage</h3>
-    <to-do-form @todo-added="handleCreate"></to-do-form>
+    <to-do-form @todo-added="handleCreate" @todo-edit="handleEdit"></to-do-form>
   </div>        
   <div class="list-container">
       <ul id="myUL" class="tasks">
-        <li v-for="item in tasks" :key="item.id" class="task">
-          <to-do-item
-            :label="item.label" 
-            :done="item.done"
-            :id="item.id"
-            @todo-delete="handleDelete">
-          </to-do-item>
-        </li>
+        <template v-for="item in tasks" :key="item.id">
+          <component
+            :is="item.isEditing ? 'ToDoItemEdit' : 'ToDoItemDisplay'"
+            v-bind="item"
+            @todo-delete="handleDelete"
+            @todo-check="handleCheck"
+            @start-editing="startEditing"
+            @todo-edit="handleEdit"
+            @edit-cancelled="getIsEdited"
+          />
+        </template>
       </ul>
   </div>
 </template>
 
 <script>
 import ToDoForm from "./components/ToDoForm.vue";
-import ToDoItem from "./components/TodoItem.vue";
+import ToDoItemDisplay from './components/ToDoItemDisplay.vue';
+import ToDoItemEdit from './components/ToDoItemEdit.vue';
 
 // Il faut choisir entre 'export default' comme ici et la balise <script setup>
 //!\\ La fermeture de la balise <script> précédente génère une erreur au build, même commenté !
@@ -28,7 +32,8 @@ export default {
   name: "app",
   components: {
     ToDoForm,
-    ToDoItem,
+    ToDoItemDisplay,
+    ToDoItemEdit
   },
   data() {
     return {
@@ -45,6 +50,7 @@ export default {
       return this.getId() + 1;
     },
     handleCreate(label) {
+      console.log("dans handleCreate", label);
       const data = { label: label, done: false };
       data.id = this.nextId();
       this.tasks.push(data);
@@ -66,10 +72,44 @@ export default {
       }
     },
     handleDelete(id) {
+      console.log("dans handleDelete", id);
       let index = this.getIndexById(id);
       if (index !== -1) {
         this.tasks.splice(index, 1);
         localStorage.setItem("tasks", JSON.stringify(this.tasks));
+      }
+    },
+    handleCheck(id) {
+      console.log("dans handleCheck", id);
+      // Récupération de la tâche à partir de son id pour alterner la valeur de 'done' à chaque clic, puis mise à jour dans le localStorage
+      let index = this.getIndexById(id);
+      if (index !== -1) {
+        const task = this.tasks[index];
+        task.done = !task.done;
+        this.handleUpdate(task);
+      }
+    },
+    // cette méthode n'est pas touchée, il faut corriger
+    handleEdit(id, newLabel) {
+      console.log("dans handleEdit");
+      const index = this.getIndexById(id);
+      if (index !== -1) {
+        const task = this.tasks[index];
+        task.label = newLabel;
+        task.isEditing = false;
+        this.handleUpdate(task);
+      }
+    },
+    startEditing(id) {
+      this.tasks.forEach(task => {
+        task.isEditing = task.id === id;
+      });
+    },
+    getIsEdited(id, status, label) {
+      let index = this.getIndexById(id);
+      if (index !== -1) {
+        this.tasks[index].isEditing = status;
+        this.tasks[index].label = label;
       }
     }
   }
