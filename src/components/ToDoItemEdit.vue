@@ -1,6 +1,7 @@
 <template>
   <div class="task">
     <input
+      ref="editTask"
       type="text"
       class="input-edit"
       id="myInput-item"
@@ -19,6 +20,10 @@ export default {
     label: String,
     id: Number,
   },
+  mounted() {
+        const editTask = this.$refs.editTask;
+        editTask.focus();
+    },
   data() {
     return {
       editingLabel: this.label,
@@ -33,7 +38,6 @@ export default {
     },
     editCancelled() {
       this.isEditing = false;
-      this.label = 
       this.$emit('edit-cancelled', this.id, this.isEditing, this.label);
     }
   },

@@ -94,3 +94,6 @@ Ceci m'a permis de contourner les interférences entre les event Listeners posé
 
 Pour gérer l'affichage du label de la tâche lors de son édition, j'ai dû créé ajouter une propriété dans data() pour être en mesure de changer l'état de la props transmise (label).
 J'ai également dû créer un eventListener pour émettre le statut de la tâche isEditing=false lors du clic sur l'icone d'abandon de la modification.
+
+Pour ajouter le focus sur la tâche courante au clic sur l'icone d'édition, j'ai utilisé la propriété `ref` de Vue pour accéder aux éléments du VirtualDOM et les manipuler.
+Après voir déclarer ma ref sur l'input, j'ai déclaré le focus sur cet élément lors d'une des étapes du cycle de vie des composants Vue : `mounted()`.

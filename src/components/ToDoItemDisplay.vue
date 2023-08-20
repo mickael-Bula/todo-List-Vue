@@ -8,26 +8,26 @@
   <script>
   export default {
     props: {
-      label: String,
-      done: Boolean,
-      id: Number,
+        label: String,
+        done: Boolean,
+        id: Number,
     },
     data() {
-      return {
-        isDone: this.done,
+        return {
+            isDone: this.done,
       };
     },
     methods: {
-      todoDelete() {
-        this.$emit('todo-delete', this.id);
-      },
-      todoCheck() {
-        this.$emit('todo-check', this.id);
-        this.isDone = !this.isDone;
-      },
-      startEditing() {
-        this.$emit('start-editing', this.id);
-      },
+        todoDelete() {
+            this.$emit('todo-delete', this.id);
+        },
+        todoCheck() {
+            this.$emit('todo-check', this.id);
+            this.isDone = !this.isDone;
+        },
+        startEditing() {
+            this.$emit('start-editing', this.id);
+        },
     },
     emits: ['todo-delete', 'todo-check', 'start-editing'],
   };
