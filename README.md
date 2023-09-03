@@ -96,4 +96,4 @@ Pour gérer l'affichage du label de la tâche lors de son édition, j'ai dû cr�
 J'ai également dû créer un eventListener pour émettre le statut de la tâche isEditing=false lors du clic sur l'icone d'abandon de la modification.
 
 Pour ajouter le focus sur la tâche courante au clic sur l'icone d'édition, j'ai utilisé la propriété `ref` de Vue pour accéder aux éléments du VirtualDOM et les manipuler.
-Après voir déclarer ma ref sur l'input, j'ai déclaré le focus sur cet élément lors d'une des étapes du cycle de vie des composants Vue : `mounted()`.
+Après voir déclarer ma ref sur l'input, j'ai déclaré le focus sur cet élément lors d'une des étapes du cycle de vie des composants Vue : `mounted()`. (Doc [Mozilla](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Vue_refs_focus_management))

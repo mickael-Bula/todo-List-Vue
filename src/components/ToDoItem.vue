@@ -1,9 +1,12 @@
 <template>
-    <!-- <div>
-        <label for="todo-item">{{ label }}</label>
-        <input type="checkbox" id="todo-item" :checked="isDone">
-    </div> -->
-    <div :checked="isDone">{{ label }}<span class="close" @click="todoDelete">{{ '\u00D7' }}</span></div>
+    <li v-if="!isEditing" :class="{ checked: isDone }" class="task" @click="todoCheck">{{ label }}
+        <span @click="startEditing" class="edit"><i class="fa fa-light fa-pencil"></i></span>
+        <span class="close" @click="todoDelete"><i class="fa fa-light fa-pencil"></i></span>
+    </li>
+    <form v-else id="form-item" class="form">
+        <input type="text" class="input" id="myInput-item" @keydown.enter.prevent @keyup.enter="onSubmit" v-model.trim="editingLabel">
+        <button class="addBtn" @click.prevent="onSubmit">Modifier</button>
+  </form>
 </template>
 
 <script>
@@ -26,14 +29,35 @@ export default {
     data() {
         return {
             isDone: this.done,
+            isEditing: false,
+            editingLabel: this.label,
         }
     },
     methods: {
+        startEditing() {
+            this.isEditing = true;
+        },
+        onSubmit(event) {
+            event.stopPropagation();
+            if (this.editingLabel === "") {
+                return;
+            }
+            this.$emit('todo-edit', this.id, this.editingLabel);
+            this.isEditing = false;
+        },
         todoDelete() {
+            // event.stopPropagation(); // ne convient pas car empêche l'évènement d'être propagé au parent qui doit pourtant exécuter la méthode déclarée dans $emit()
+            console.log("dans todo-delete");
             this.$emit('todo-delete', this.id);
-        }
+        },
+        todoCheck() {
+            // event.stopPropagation();
+            console.log("dans todo-check");
+            this.$emit('todo-check', this.id);
+            this.isDone = !this.isDone;
+        },
     },
-    emits: ['todo-delete'],
+    emits: ['todo-delete', 'todo-edit', 'todo-check'],
 };
 </script>
 
