@@ -138,3 +138,12 @@ $ git push origin gh-pages
 ```
 
 Ne reste plus qu'à visiter la page `https://mickael-Bula.github.io/todo-List-Vue/`.
+
+Problème avec le build que je n'arrive à déployer, certainement en raison de la passphrase de ma clé ssh.
+Je décide de supprimer celle-ci pour faciliter le push, ceci après de nombreurse recherches infructueuses...
+
+```bash
+ssh-keygen -p -f C:\Users\VotreNom\.ssh\id_rsa
+```
+
+
