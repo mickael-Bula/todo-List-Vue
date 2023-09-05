@@ -97,3 +97,44 @@ J'ai également dû créer un eventListener pour émettre le statut de la tâche
 
 Pour ajouter le focus sur la tâche courante au clic sur l'icone d'édition, j'ai utilisé la propriété `ref` de Vue pour accéder aux éléments du VirtualDOM et les manipuler.
 Après voir déclarer ma ref sur l'input, j'ai déclaré le focus sur cet élément lors d'une des étapes du cycle de vie des composants Vue : `mounted()`. (Doc [Mozilla](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Vue_refs_focus_management))
+
+## Configuration de l'application pour l'intégrer aux Github pages
+
+Afin d'ajouter mon application Vue à mon portfolio hébergé sur github-pages, il m'a fallu configurer l'appli.
+
+Pour cela, j'ai d'abord créé un fichier `vue.config.js` avec le contenu suivant :
+
+```js
+module.exports = {
+    publicPath: process.env.NODE_ENV === 'production' ? 'https://github.com/mickael-Bula/todo-List-Vue' : '/'
+}
+```
+
+J'ai ensuite installé un package permettant de gérer l'exposition du build de l'application sur github-pages :
+
+```bash
+$ npm install gh-pages
+```
+
+J'ai également mis à jour le fichier `package.json` en ajoutant une commande dans `script`: 
+
+```json
+"deploy": "npm run build && gh-pages -d dist"
+```
+
+L'ajout de cette commande me permet de lancer le build de l'application dans un répertoire `dist` dédié :
+
+```bash
+$ npm run deploy
+```
+
+J'ai ensuite demandé à git de créer une branche distante pour accueillir le build que je commite avanr de le pousser :
+
+```bash
+$ git add dist
+$ git commit -m "Ajout du build de l'application"
+$ git subtree split --prefix dist -b gh-pages
+$ git push origin gh-pages
+```
+
+Ne reste plus qu'à visiter la page `https://mickael-Bula.github.io/todo-List-Vue/`.
