@@ -61,7 +61,7 @@ Les modifications sont apportées ligne 9 du fichier App.vue avec `:key="item.id
 Problème rencontré lors de l'ajout de la directive `@submit.prevent="onSubmit"` : celle-ci étant positionnée sur un élément `<button>`, elle ne peut fonctionner puisque spécifique à l'élément `<form>`.
 Après correction de `@submit` pour `@click`, le problème a été résolu.
 
-Un autre problème rencontré a été celui du footer et de son positionnement `sticky`. Pour que ce dernier fonctionne, il faut prendre en compte son `container`, c'est-à-dire l'élément qui le contient. Or, si l'on veut intégrer ce footer dans un composant (comme App.vue par exemple), il faut tenir compte des balises `<template></template>` qui encadre nécessairement ce dernier. Bien qu'elles ne soient pas rendues, ces balises interfèrent avec l'élément : le footer est alors sticky relativement à `<template>` et non plus au `<body></body>`.
+Un autre problème rencontré a été celui du footer et de son positionnement `sticky`. Pour que ce dernier fonctionne, il faut prendre en compte son `container`, c'est-à-dire l'élément qui le contient. Or, si l'on veut intégrer ce footer dans un composant (comme App.vue par exemple), il faut tenir compte des balises `<template></template>` qui encadrent nécessairement ce dernier. Bien qu'elles ne soient pas rendues, ces balises interfèrent avec l'élément : le footer est alors sticky relativement à `<template>` et non plus au `<body></body>`.
 Après avoir replacé le `<footer>` dans le fichier `index.html`, tout est rentré dans l'ordre.
 
 J'ai rencontré un problème avec un event-listener que j'ai déclaré dans mon code.
@@ -74,28 +74,29 @@ emits: ['todo-added']
 ```
 
 Lors du test de l'appli hors connexion, les fonts ne sont pas disponibles en raison d'un chargement par CDN.
-Il faut donc &tudier la possibilité de récupérer les fonts sur le poste, de les rendre disponibles sur le poste de l'utilisateur.
+Il faut donc étudier la possibilité de récupérer les fonts sur le poste, pour les rendre ensuite disponibles sur le poste de l'utilisateur.
 
 Pour interpréter le symbole `x` utilisé pour signifier la suppression d'une tâche, il faut utiliser la séquence d'échappement Unicode `\u`, ce qui donne `{{ '\u00D7' }}`.
 
 J'ai rencontré un problème lors de l'utilisation d'un eventListener nommé `delete`. Il s'avère qu'il faut veiller à ne pas utiliser des noms réservés propres au langage Javascript. En effet, ici, `delete` est un nom onBuilt de JS.
-Pour régler le problème, il suffit de renommer la méthode, pour exemple sou le nom `handleDelete`.
+Pour régler le problème, il suffit de renommer la méthode, par exemple sous le nom `handleDelete`.
 
 J'ai ajouté un eventListener pour vider le champ input du formulaire lorsque la touche enter est pressée, mais sans succès.
 Le problème venait de l'utilisation du modificateur `lazy` sur le `v-model` qui semble entrer en conflit avec la directive précédente.
 Le modificateur .lazy pour v-model retarde la mise à jour de la valeur liée jusqu'à ce que l'élément perde le focus (c'est-à-dire que l'utilisateur quitte le champ de saisie). Cela signifie que si l'on utilise le modificateur `.lazy` sur `v-model`, les mises à jour de la propriété this.label ne se produiront qu'après que l'utilisateur aura quitté le champ de saisie (par exemple, en cliquant en dehors du champ de saisie ou en appuyant sur la touche "Tab").
-Après avoir supprimer le modificateur, le champ du formulaire est bien vidée lorsque la touche enter est pressée.
+Après avoir supprimer le modificateur, le champ du formulaire est bien vidé lorsque la touche enter est pressée.
 
-Du fait qu'il y a plusieurs eventListener sur un même composant et qu'ils existent en outre des composants inclus dans d'autres, lorsqu'un éènement est émis ce sont yous les évèments autour qui sont déclencés. Il faut trouver à isoler la propagation des évènements.
+Du fait qu'il y a plusieurs eventListener sur un même composant et qu'il existe en outre des composants inclus dans d'autres, lorsqu'un éènement est émis ce sont tous les évènements autour qui sont déclenchés. Il faut trouver à isoler la propagation des évènements.
 
 J'ai eu des difficultés à gérer les eventListeners multiples sur un même composant, notamment concernant ceux que j'ai voulu implémenter pour l'édition d'une tâche.
 Afin de gérer cette difficulté, j'ai opté pour une réécriture du composant en deux éléments distincts : ToDoItemDisplay et ToDoItemEdit.
 Ceci m'a permis de contourner les interférences entre les event Listeners posés sur un même élément.
 
-Pour gérer l'affichage du label de la tâche lors de son édition, j'ai dû créé ajouter une propriété dans data() pour être en mesure de changer l'état de la props transmise (label).
+Pour gérer l'affichage du label de la tâche lors de son édition, j'ai dû ajouter une propriété dans data() pour être en mesure de changer l'état de la props transmise (label).
 J'ai également dû créer un eventListener pour émettre le statut de la tâche isEditing=false lors du clic sur l'icone d'abandon de la modification.
 
 Pour ajouter le focus sur la tâche courante au clic sur l'icone d'édition, j'ai utilisé la propriété `ref` de Vue pour accéder aux éléments du VirtualDOM et les manipuler.
+
 Après voir déclarer ma ref sur l'input, j'ai déclaré le focus sur cet élément lors d'une des étapes du cycle de vie des composants Vue : `mounted()`. (Doc [Mozilla](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Vue_refs_focus_management))
 
 ## Configuration de l'application pour l'intégrer aux Github pages
