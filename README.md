@@ -11,7 +11,7 @@ $ yarn dev          # lance le serveur de développement
 
 ## Suppression des fichiers d'exemple
 
-Dans le fichier App.vue, supprimer le contenu des balises <script></script> et <style></style>.
+Dans le fichier `App.vue`, supprimer le contenu des balises <script></script> et <style></style>.
 Ne laisser que la balise <div></div> avec un <h1>ProjectName</h1> dans la balise <template></template>
 Supprimer tout le contenu du fichier style.css
 Supprimer dans le fichier index.html le contenu de la balise <link /> et modifier le contenu de la balise <title></title>
@@ -28,9 +28,9 @@ $ rm src/assets/* src/components/*
 - Voir si les couleurs (rouge notamment) se fondent bien dans la nouvelle charte graphique verte de Vue.
 - Ajouter un personnage svg dans le portfolio après avoir suivi tuto pour découper du contenu dans une image téléchargée (C:\Users\bulam\Documents\images SVG)
 - utiliser la méthode d'édition déjà déclarée dans le composant principal, ou modifier les boutons lors de l'édition
-- Ajouter les icones de fontawesome en tant que composants (https://fontawesome.com/docs/web/use-with/vue/)
+- Ajouter les icônes de fontawesome en tant que composants (https://fontawesome.com/docs/web/use-with/vue/)
 - Ajouter des transitions pour les styles au survol des éléments (tasks, icones...)
-- Ajouter la possibilité de remonter ou descendre une tâche dans le liste pour ordonner l'ordre de priorité (raccourci clavier CTRL + &uarr; et &darr; ou [drag&drop](https://learnvue.co/articles/vue-drag-and-drop))
+- Ajouter la possibilité de remonter ou descendre une tâche dans la liste pour ordonner l'ordre de priorité (raccourci clavier CTRL + &uarr; et &darr; ou [drag&drop](https://learnvue.co/articles/vue-drag-and-drop))
 - Ajouter un bouton Annuler après Valider pour supprimer une tâche saisie par erreur
 
 ## Ajout du logo Vue
@@ -42,7 +42,7 @@ Pour l'affichage, il suffit d'utiliser la balise <img> :
 <img src="/vuejs-icon.svg" />  <!-- les fichiers statiques étant servis depuis la racine public, inutile de préciser le chemin complet ../public/vuejs-icon.svg -->
 ```
 
-## Ajout de l'icone Vue dans l'onglet du navigateur
+## Ajout de l'icône Vue dans l'onglet du navigateur
 
 Je réutilise le favicon disponible dans les projets Vue, sous public/favicon.ico.
 Pour cela, je copie-colle le fichier dans le même répertoire `public`, puis j'ajoute ceci dans le <header> de `index.html` :
@@ -56,7 +56,7 @@ Pour cela, je copie-colle le fichier dans le même répertoire `public`, puis j'
 Plutôt que d'utiliser l'index comme clé dans la boucle for, je me sert de l'id disponible dans task.
 Les modifications sont apportées ligne 9 du fichier App.vue avec `:key="item.id"`.
 
-## Troubleshootings
+## Troubleshooting
 
 Problème rencontré lors de l'ajout de la directive `@submit.prevent="onSubmit"` : celle-ci étant positionnée sur un élément `<button>`, elle ne peut fonctionner puisque spécifique à l'élément `<form>`.
 Après correction de `@submit` pour `@click`, le problème a été résolu.
@@ -93,9 +93,9 @@ Afin de gérer cette difficulté, j'ai opté pour une réécriture du composant 
 Ceci m'a permis de contourner les interférences entre les event Listeners posés sur un même élément.
 
 Pour gérer l'affichage du label de la tâche lors de son édition, j'ai dû ajouter une propriété dans data() pour être en mesure de changer l'état de la props transmise (label).
-J'ai également dû créer un eventListener pour émettre le statut de la tâche isEditing=false lors du clic sur l'icone d'abandon de la modification.
+J'ai également dû créer un eventListener pour émettre le statut de la tâche isEditing=false lors du clic sur l'icône d'abandon de la modification.
 
-Pour ajouter le focus sur la tâche courante au clic sur l'icone d'édition, j'ai utilisé la propriété `ref` de Vue pour accéder aux éléments du VirtualDOM et les manipuler.
+Pour ajouter le focus sur la tâche courante au clic sur l'icône d'édition, j'ai utilisé la propriété `ref` de Vue pour accéder aux éléments du VirtualDOM et les manipuler.
 
 Après voir déclarer ma ref sur l'input, j'ai déclaré le focus sur cet élément lors d'une des étapes du cycle de vie des composants Vue : `mounted()`. (Doc [Mozilla](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Vue_refs_focus_management))
 
@@ -120,7 +120,9 @@ $ npm install gh-pages
 J'ai également mis à jour le fichier `package.json` en ajoutant une commande dans `script`: 
 
 ```json
-"deploy": "npm run build && gh-pages -d dist"
+{
+  "deploy": "npm run build && gh-pages -d dist"
+}
 ```
 
 L'ajout de cette commande me permet de lancer le build de l'application dans un répertoire `dist` dédié :
@@ -129,7 +131,7 @@ L'ajout de cette commande me permet de lancer le build de l'application dans un 
 $ npm run deploy
 ```
 
-J'ai ensuite demandé à git de créer une branche distante pour accueillir le build que je commite avanr de le pousser :
+J'ai ensuite demandé à git de créer une branche distante pour accueillir le build que je commite avant de le pousser :
 
 ```bash
 $ git add dist
@@ -141,7 +143,7 @@ $ git push origin gh-pages
 Ne reste plus qu'à visiter la page `https://mickael-Bula.github.io/todo-List-Vue/`.
 
 Problème avec le build que je n'arrive à déployer, certainement en raison de la passphrase de ma clé ssh.
-Je décide de supprimer celle-ci pour faciliter le push, ceci après de nombreurse recherches infructueuses...
+Je décide de supprimer celle-ci pour faciliter le push, ceci après de nombreuses recherches infructueuses...
 
 ```bash
 ssh-keygen -p -f C:\Users\VotreNom\.ssh\id_rsa
