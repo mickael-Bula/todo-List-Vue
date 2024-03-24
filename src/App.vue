@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <h1 class="title">To-do List<img class="logo" src="/vuejs-icon.svg" /></h1>
+    <h1 class="title">To-do List<img class="logo" src="/vuejs-icon.svg"  alt="logo Vue"/></h1>
     <h3 class="subtitle">avec persistance des données dans le localStorage</h3>
     <to-do-form @todo-added="handleCreate" @todo-edit="handleEdit"></to-do-form>
   </div>        
@@ -27,9 +27,9 @@ import ToDoItemDisplay from './components/ToDoItemDisplay.vue';
 import ToDoItemEdit from './components/ToDoItemEdit.vue';
 
 // Il faut choisir entre 'export default' comme ici et la balise <script setup>
-//!\\ La fermeture de la balise <script> précédente génère une erreur au build, même commenté !
+//!\\ La fermeture de la balise <script> précédente génère une erreur au build, même commentée !
 export default {
-  name: "app",
+  name: "App",
   components: {
     ToDoForm,
     ToDoItemDisplay,
