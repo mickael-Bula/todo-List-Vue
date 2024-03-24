@@ -1,13 +1,10 @@
 # Vue 3 + Vite
 
-## Lancer l'application
+Pour rappel, voici la manière dont le code Javascript et ses composants Vue sont ajoutés et rendu disponible :
 
-Le CLI-Vite étant installé, l'application peut-être lancée comme ceci :
-
-```bash
-$ vite build  # construit l'app
-$ vite serve  # lance le serveur Vite
-```
+- le fichier index.html appel le fichier javascript main.js
+- le fichier main.js importe le css et le composant principal depuis `./App.vue`
+- le script Vue principal déclare le code qui sera injecté dans `#app` et fait l'import des composants Vue.
 
 ## Installation
 
@@ -23,7 +20,7 @@ $ yarn dev          # lance le serveur de développement
 Dans le fichier `App.vue`, supprimer le contenu des balises <script></script> et <style></style>.
 Ne laisser que la balise <div></div> avec un <h1>ProjectName</h1> dans la balise <template></template>
 Supprimer tout le contenu du fichier style.css
-Supprimer dans le fichier index.html le contenu de la balise <link /> et modifier le contenu de la balise <title></title>
+Supprimer dans le fichier index.html le contenu de la balise `<link />` et modifier le contenu de la balise <title></title>
 
 Supprimer les fichiers suivants :
 
@@ -31,16 +28,14 @@ Supprimer les fichiers suivants :
 $ rm src/assets/* src/components/*
 ```
 
-## TODO
+## Lancer l'application
 
-- Vérifier la taille du logo Vue selon les écrans. Adapter sa hauteur en conséquence (trop grand actuellement).
-- Voir si les couleurs (rouge notamment) se fondent bien dans la nouvelle charte graphique verte de Vue.
-- Ajouter un personnage svg dans le portfolio après avoir suivi tuto pour découper du contenu dans une image téléchargée (C:\Users\bulam\Documents\images SVG)
-- utiliser la méthode d'édition déjà déclarée dans le composant principal, ou modifier les boutons lors de l'édition
-- Ajouter les icônes de fontawesome en tant que composants (https://fontawesome.com/docs/web/use-with/vue/)
-- Ajouter des transitions pour les styles au survol des éléments (tasks, icones...)
-- Ajouter la possibilité de remonter ou descendre une tâche dans la liste pour ordonner l'ordre de priorité (raccourci clavier CTRL + &uarr; et &darr; ou [drag&drop](https://learnvue.co/articles/vue-drag-and-drop))
-- Ajouter un bouton Annuler après Valider pour supprimer une tâche saisie par erreur
+Le CLI-Vite étant installé, l'application peut-être lancée comme ceci :
+
+```bash
+$ vite build  # construit l'app
+$ vite serve  # lance le serveur Vite
+```
 
 ## Ajout du logo Vue
 
@@ -74,13 +69,13 @@ Les modifications sont apportées ligne 9 du fichier `App.vue` avec `:key="item.
 Problème rencontré lors de l'ajout de la directive `@submit.prevent="onSubmit"` : celle-ci étant positionnée sur un élément `<button>`, elle ne peut fonctionner puisque spécifique à l'élément `<form>`.
 Après correction de `@submit` pour `@click`, le problème a été résolu.
 
-Un autre problème rencontré a été celui du footer et de son positionnement `sticky`. Pour que ce dernier fonctionne, il faut prendre en compte son `container`, c'est-à-dire l'élément qui le contient. Or, si l'on veut intégrer ce footer dans un composant (comme App.vue par exemple), il faut tenir compte des balises `<template></template>` qui encadrent nécessairement ce dernier. Bien qu'elles ne soient pas rendues, ces balises interfèrent avec l'élément : le footer est alors sticky relativement à `<template>` et non plus au `<body></body>`.
+Un autre problème rencontré a été celui du footer et de son positionnement `sticky`. Pour que ce dernier fonctionne, il faut prendre en compte son `container`, c'est-à-dire l'élément qui le contient. Or, si l'on veut intégrer ce footer dans un composant (comme `App.vue` par exemple), il faut tenir compte des balises `<template></template>` qui encadrent nécessairement ce dernier. Bien qu'elles ne soient pas rendues, ces balises interfèrent avec l'élément : le footer est alors sticky relativement à `<template>` et non plus au `<body></body>`.
 Après avoir replacé le `<footer>` dans le fichier `index.html`, tout est rentré dans l'ordre.
 
-J'ai rencontré un problème avec un event-listener que j'ai déclaré dans mon code.
+J'ai rencontré un problème avec un _event listener_ que j'ai déclaré dans mon code.
 Celui-ci était signalé comme étant non déclaré par les dev tools.
-Après quelques recherches, j'ai compris que depuis Vue3, que ce soit avec l'api option ou composition, il est nécessaire de déclarer les event-listener utilisés. Il s'agit d'un mode plus strict d'utilisation.
-Pour déclarer celui-ci, il suffit d'ajouter la clé `emits` au composant qui le déclare, puis de renseigner en valeur un tableau contenant l'event-listener :
+Après quelques recherches, j'ai compris que depuis Vue3, que ce soit avec l'api option ou composition, il est nécessaire de déclarer les _event listeners_ utilisés. Il s'agit d'un mode plus strict d'utilisation.
+Pour déclarer celui-ci, il suffit d'ajouter la clé `emits` au composant qui le déclare, puis de renseigner en valeur un tableau contenant l'_event listener_ :
 
 ```js
 emits: ['todo-added']
@@ -94,15 +89,15 @@ Pour interpréter le symbole `x` utilisé pour signifier la suppression d'une t�
 J'ai rencontré un problème lors de l'utilisation d'un eventListener nommé `delete`. Il s'avère qu'il faut veiller à ne pas utiliser des noms réservés propres au langage Javascript. En effet, ici, `delete` est un nom onBuilt de JS.
 Pour régler le problème, il suffit de renommer la méthode, par exemple sous le nom `handleDelete`.
 
-J'ai ajouté un eventListener pour vider le champ input du formulaire lorsque la touche enter est pressée, mais sans succès.
+J'ai ajouté un eventListener pour vider le champ input du formulaire lorsque la touche `ENTREE` est pressée, mais sans succès.
 Le problème venait de l'utilisation du modificateur `lazy` sur le `v-model` qui semble entrer en conflit avec la directive précédente.
-Le modificateur .lazy pour v-model retarde la mise à jour de la valeur liée jusqu'à ce que l'élément perde le focus (c'est-à-dire que l'utilisateur quitte le champ de saisie). Cela signifie que si l'on utilise le modificateur `.lazy` sur `v-model`, les mises à jour de la propriété this.label ne se produiront qu'après que l'utilisateur aura quitté le champ de saisie (par exemple, en cliquant en dehors du champ de saisie ou en appuyant sur la touche "Tab").
-Après avoir supprimer le modificateur, le champ du formulaire est bien vidé lorsque la touche enter est pressée.
+Le modificateur .lazy pour v-model retarde la mise à jour de la valeur liée jusqu'à ce que l'élément perde le focus (c'est-à-dire que l'utilisateur quitte le champ de saisie). Cela signifie que si l'on utilise le modificateur `.lazy` sur `v-model`, les mises à jour de la propriété `this.label` ne se produiront qu'après que l'utilisateur aura quitté le champ de saisie (par exemple, en cliquant en dehors du champ de saisie ou en appuyant sur la touche "Tab").
+Après avoir supprimé le modificateur, le champ du formulaire est bien vidé lorsque la touche `ENTREE` est pressée.
 
-Du fait qu'il y a plusieurs eventListener sur un même composant et qu'il existe en outre des composants inclus dans d'autres, lorsqu'un éènement est émis ce sont tous les évènements autour qui sont déclenchés. Il faut trouver à isoler la propagation des évènements.
+Du fait qu'il y a plusieurs eventListener sur un même composant et qu'il existe en outre des composants inclus dans d'autres, lorsqu'un évènement est émis ce sont tous les évènements autour qui sont déclenchés. Il faut trouver à isoler la propagation des évènements.
 
 J'ai eu des difficultés à gérer les eventListeners multiples sur un même composant, notamment concernant ceux que j'ai voulu implémenter pour l'édition d'une tâche.
-Afin de gérer cette difficulté, j'ai opté pour une réécriture du composant en deux éléments distincts : ToDoItemDisplay et ToDoItemEdit.
+Afin de surmonter cette difficulté, j'ai opté pour une réécriture du composant en deux éléments distincts : ToDoItemDisplay et ToDoItemEdit.
 Ceci m'a permis de contourner les interférences entre les event Listeners posés sur un même élément.
 
 Pour gérer l'affichage du label de la tâche lors de son édition, j'ai dû ajouter une propriété dans data() pour être en mesure de changer l'état de la props transmise (label).
@@ -124,13 +119,22 @@ module.exports = {
 }
 ```
 
+J'ai également déclaré la racine de l'appli à déployer sur github dans le fichier `vite.config.js` :
+
+```js
+export default defineConfig({
+  plugins: [vue()],
+  base: '/todo-List-Vue/',
+})
+```
+
 J'ai ensuite installé un package permettant de gérer l'exposition du build de l'application sur github-pages :
 
 ```bash
 $ npm install gh-pages
 ```
 
-J'ai également mis à jour le fichier `package.json` en ajoutant une commande dans `script`: 
+J'ai ensuite mis à jour le fichier `package.json` en ajoutant une commande dans `script`: 
 
 ```json
 {
@@ -144,7 +148,7 @@ L'ajout de cette commande me permet de lancer le build de l'application dans un 
 $ npm run deploy
 ```
 
-J'ai ensuite demandé à git de créer une branche distante pour accueillir le build que je commite avant de le pousser :
+J'ai demandé à `git` de créer une branche distante pour accueillir le build que je commite avant de le pousser :
 
 ```bash
 $ git add dist
@@ -153,13 +157,20 @@ $ git subtree split --prefix dist -b gh-pages
 $ git push origin gh-pages
 ```
 
-Ne reste plus qu'à visiter la page `https://mickael-Bula.github.io/todo-List-Vue/`.
+Il faut ensuite suivre les instructions disponibles sur le site de [Vite](https://vitejs.dev/guide/static-deploy.html)
+et y récupérer le workflow de déploiement.
 
-Problème avec le build que je n'arrive à déployer, certainement en raison de la passphrase de ma clé ssh.
-Je décide de supprimer celle-ci pour faciliter le push, ceci après de nombreuses recherches infructueuses...
+Avec cette configuration, le build de l'application sera lancé automatiquement à chaque nouveau push sur la branche principale.
 
-```bash
-ssh-keygen -p -f C:\Users\VotreNom\.ssh\id_rsa
-```
+Ne reste plus qu'à visiter la page `https://mickael-Bula.github.io/todo-List-Vue/` pour en voir le résultat.
 
+## TODO
 
+- Vérifier la taille du logo Vue selon les écrans. Adapter sa hauteur en conséquence (trop grand actuellement).
+- Voir si les couleurs (rouge notamment) se fondent bien dans la nouvelle charte graphique verte de Vue.
+- Ajouter un personnage svg dans le portfolio après avoir suivi tuto pour découper du contenu dans une image téléchargée (C:\Users\bulam\Documents\images SVG)
+- utiliser la méthode d'édition déjà déclarée dans le composant principal ou modifier les boutons lors de l'édition
+- Ajouter les icônes de fontawesome en tant que composants (https://fontawesome.com/docs/web/use-with/vue/)
+- Ajouter des transitions pour les styles au survol des éléments (tasks, icônes...)
+- Ajouter la possibilité de remonter ou descendre une tâche dans la liste pour ordonner l'ordre de priorité (raccourci clavier CTRL + &uarr; et &darr; ou [drag&drop](https://learnvue.co/articles/vue-drag-and-drop))
+- Ajouter un bouton Annuler après Valider pour supprimer une tâche saisie par erreur
