@@ -1,32 +1,35 @@
 <!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Mickaël Bula">
-    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
-    <meta name="description" content="Une to-do list réalisée avec Vue 3 et qui utilise la persistence des données dans le localStorage.">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Ma todo-list avec Vue</title>
-  </head>
-  <body>
+    <head>
+        <meta charset="UTF-8">
+        <link href="/favicon.ico" rel="icon">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Mickaël Bula" name="author">
+        <meta content="interest-cohort=()" http-equiv="Permissions-Policy">
+        <meta content="Une to-do list réalisée avec Vue 3 et qui utilise la persistence des données dans le localStorage."
+              name="description">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;700&display=swap" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+              type="text/css">
+        <title>Ma todo-list avec Vue</title>
+        <script defer src="src/main.js" type="module"></script>
+    </head>
+    <body>
     <div id="app"></div>
     <!-- Déplacer le footer dans le composant App.vue nuit au positionnement sticky : le container n'est plus alors body mais template -->
     <footer id="contact" class="contact">
-      <ul class="contact__social-icons">
-        <li class="icon">
-          <a href="https://www.linkedin.com/in/mickael-bula/"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-        </li>
-        <li class="icon">
-          <a href="https://mickael-bula.github.io/portfolio/"><i class="fa fa-briefcase" aria-hidden="true"></i></a>
-        </li>
-        <li class="icon">
-          <a href="https://github.com/mickael-Bula"><i class="fa fa-github" aria-hidden="true"></i></a>
-        </li>
-      </ul>
+        <ul class="contact__social-icons">
+            <li class="icon">
+                <a href="https://www.linkedin.com/in/mickael-bula/"><i aria-hidden="true" class="fa fa-linkedin"></i></a>
+            </li>
+            <li class="icon">
+                <a href="https://mickael-bula.github.io/portfolio/"><i aria-hidden="true" class="fa fa-briefcase"></i></a>
+            </li>
+            <li class="icon">
+                <a href="https://github.com/mickael-Bula"><i aria-hidden="true" class="fa fa-github"></i></a>
+            </li>
+        </ul>
     </footer>
-  </body>
+    </body>
 </html>

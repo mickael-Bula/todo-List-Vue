@@ -1,5 +1,14 @@
 # Vue 3 + Vite
 
+## Lancer l'application
+
+Le CLI-Vite étant installé, l'application peut-être lancée comme ceci :
+
+```bash
+$ vite build  # construit l'app
+$ vite serve  # lance le serveur Vite
+```
+
 ## Installation
 
 ```bash
@@ -39,22 +48,26 @@ Le svg a été téléchargé sur le net, puis déposé dans le répertoire `publ
 Pour l'affichage, il suffit d'utiliser la balise <img> :
 
 ```html
-<img src="/vuejs-icon.svg" />  <!-- les fichiers statiques étant servis depuis la racine public, inutile de préciser le chemin complet ../public/vuejs-icon.svg -->
+<img src="/vuejs-icon.svg" />  <!-- les fichiers statiques étant servis depuis la racine "public", inutile de préciser le chemin complet ../public/vuejs-icon.svg -->
 ```
 
 ## Ajout de l'icône Vue dans l'onglet du navigateur
 
 Je réutilise le favicon disponible dans les projets Vue, sous public/favicon.ico.
-Pour cela, je copie-colle le fichier dans le même répertoire `public`, puis j'ajoute ceci dans le <header> de `index.html` :
+Pour cela, je copie-colle le fichier dans le même répertoire `public`, puis j'ajoute ceci dans le <header> de `index.html`.
+
+>NOTE : Comme indiqué précédemment, les trois écritures suivantes sont équivalentes :
 
 ```html
 <link rel="icon" href="./public/favicon.ico">
+<link rel="icon" href="/public/favicon.ico">
+<link rel="icon" href="/favicon.ico">
 ```
 
 ## Utilisation de l'id comme clé
 
-Plutôt que d'utiliser l'index comme clé dans la boucle for, je me sert de l'id disponible dans task.
-Les modifications sont apportées ligne 9 du fichier App.vue avec `:key="item.id"`.
+Plutôt que d'utiliser l'index comme clé dans la boucle for, je me sers de l'id disponible dans task.
+Les modifications sont apportées ligne 9 du fichier `App.vue` avec `:key="item.id"`.
 
 ## Troubleshooting
 
